@@ -21,7 +21,7 @@ const Live = () => {
   return (
     <div>
       <MapContainer
-        style={{ width: "100%", height: "93.5vh" }}
+        style={{ width: "100%", height: "92.5vh" }}
         center={[13.082, 80.27]}
         zoom={zoom}
         ref={mapRef}
@@ -29,10 +29,7 @@ const Live = () => {
         maxZoom={13}
       >
         <TileLayer url="https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=PMFhUkfGpOK4cD0UwDGt" />
-        <Marker
-          position={[13.082, 80.27]}
-          color="#94C0E0"
-        >
+        <Marker position={[13.082, 80.27]} color="#94C0E0">
           {" "}
         </Marker>
       </MapContainer>

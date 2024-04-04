@@ -55,7 +55,7 @@ const data = [
     <div className="h-full bg-[#94C0E0] p-4">
       <div className="container mx-auto px-6 bg-sky-50 rounded-xl">
         <div className="text-blue-900 pt-4 md:pt-5 flex justify-center font-bold text-lg sm:text-2xl md:text-3xl ml-2">
-          Air Quality Analysis
+          Air Quality Details
         </div>
         <div className="flex flex-col lg:flex-row justify-around">
           <div className="flex justify-center items-center">
