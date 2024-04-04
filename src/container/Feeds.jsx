@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ref, onValue } from "firebase/database";
+import { db } from "../config/firebase.config";
 import PM1 from "../assets/AQI/1.png";
 import PM2 from "../assets/AQI/2.png";
 import PM10 from "../assets/AQI/3.png";
@@ -26,6 +28,38 @@ const Feeds = () => {
 
   //   return () => unsubscribe();
   // }, []);
+
+
+  useEffect(() => {
+     const dbRef = ref(db, "sensorData");
+    const getRealtimeData = () => {
+      onValue(
+        dbRef,
+        (snapshot) => {
+          try {
+            if (snapshot && snapshot.exists()) {
+              const data = snapshot.val();
+              const sensorDataArray = Object.values(data);
+              setSensorData(sensorDataArray);
+            } else {
+              setSensorData([]);
+            }
+          } catch (error) {
+            console.error("Error fetching sensor data:", error);
+          }
+        },
+        (error) => {
+          console.error("Error with Firebase onValue:", error);
+        }
+      );
+    };
+
+    getRealtimeData();
+
+    return () => {
+      onValue(dbRef, null);
+    };
+  }, []);
 
   const PMdata = [
     {
@@ -88,17 +122,17 @@ const Feeds = () => {
         </div>
         <div className="pl-3 py-10 font-medium text-2xl mb-7 text-blue-900 text-center">
           <p>
-            <span className="blink"> 🔴 </span>St. Josephs
+            <span className="blink">🔴</span>St. Josephs
           </p>
         </div>
-        <div className="text-[1.2rem] md:text-[1.6rem] px-4 text-blue-800 font-medium p-4 ">
+        <div className="text-[1.2rem] md:text-[1.6rem] px-4 text-blue-800 font-medium  ">
           Pollution Measurements
         </div>
-        <div className="grid grid-row-4 xl:grid-cols-4 mb-10 ">
+        <div className="grid grid-row-4 xl:grid-cols-4 mb-10 p-7 ">
           {PMdata.map((item, index) => (
             <div
               key={index}
-              className=" flex flex-col md:flex-row border-2  border-blue-950 rounded-lg w-5/6"
+              className=" flex flex-col md:flex-row border-2  border-blue-950 rounded-lg w-5/6 h-[90%]"
             >
               <img className="w-60 p-4 m-auto" src={item.src} alt="" />
               <div className="text-[0.9rem]   lg:text-[1.1rem] justify-self-center text-white m-auto border border-black-2 rounded-lg bg-blue-900 font-bold p-3  text-center">
