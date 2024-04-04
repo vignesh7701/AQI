@@ -12,14 +12,14 @@ import { MapContainer, TileLayer, Marker } from "react-leaflet";
 
 const Live = () => {
   const coordinates = [
-    { lat: 12.785085, lng: 80.219701 },
-    { lat: 12.92, lng: 80.11 }, //Kelambakkam
+    { lat: 12.785085, lng: 80.219701 }, //Kelambakkam
+    { lat: 12.92, lng: 80.11 },//Tambaram
     { lat: 12.93, lng: 80.23 }, // Thoraipakkam
     { lat: 13.116596, lng: 80.104916 }, // Adyar
     { lat: 12.98, lng: 80.26 }, // Thiruvanmyur
     { lat: 12.724142, lng: 80.192217 }, // Thiruporur
     { lat: 12.834247, lng: 80.202841 }, //Siruseri
-    {lat : 12.869918 , lng: 80.21639}
+    { lat: 12.869918, lng: 80.21639 }, //St Josephs
     // Add more coordiates as needed
   ];
 

@@ -8,30 +8,29 @@ import NO from "../assets/AQI/4.png";
 import CO from "../assets/AQI/5.png";
 import O from "../assets/AQI/6.png";
 import VOC from "../assets/AQI/7.png";
-// import { ref, onValue } from "firebase/database";
-// import { db } from "../config/firebase.config";
+
+const coordinates = [
+  { lat: 12.785085, lng: 80.219701, name: "Kelambakkam" },
+  { lat: 12.92, lng: 80.11, name: "Tambaram" },
+  { lat: 12.93, lng: 80.23, name: "Thoraipakkam" },
+  { lat: 13.116596, lng: 80.104916, name: "Adyar" },
+  { lat: 12.98, lng: 80.26, name: "Thiruvanmyur" },
+  { lat: 12.724142, lng: 80.192217, name: "Thiruporur" },
+  { lat: 12.834247, lng: 80.202841, name: "Siruseri" },
+  { lat: 12.869918, lng: 80.21639, name: "St Josephs" },
+];
+
 const Feeds = () => {
-  // const [data, setData] = useState({});
+  
+  const defaultLocation = "St Josephs";
+  const [selectedLocation, setSelectedLocation] = useState(defaultLocation);
 
-  // useEffect(() => {
-  //   const airQualityRef = ref(db, "/AirQuality");
-
-  //   const unsubscribe = onValue(airQualityRef, (snapshot) => {
-  //     try {
-  //       const airQualityData = snapshot.val();
-  //       setData(airQualityData);
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //       // Handle the error appropriately (e.g., display an error message)
-  //     }
-  //   });
-
-  //   return () => unsubscribe();
-  // }, []);
-
+  const handleLocationChange = (e) => {
+    setSelectedLocation(e.target.value);
+  };
 
   useEffect(() => {
-     const dbRef = ref(db, "sensorData");
+    const dbRef = ref(db, "sensorData");
     const getRealtimeData = () => {
       onValue(
         dbRef,
@@ -112,17 +111,20 @@ const Feeds = () => {
             id="location"
             name="location"
             className="mt-1  block w-48 py-3 px-5 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            defaultValue="St Josephs"
+            defaultValue={defaultLocation}
+            onChange={handleLocationChange}
           >
-            <option value="St Josephs">St Josephs</option>
-            <option value="Sholinganallur">Sholinganallur</option>
-            <option value="Siruseri">Siruseri</option>
-            <option value="Karapakkam">Karapakkam</option>
+            {coordinates.map((coordinate, index) => (
+              <option key={index} value={coordinate.name}>
+                {coordinate.name}
+              </option>
+            ))}
           </select>
         </div>
         <div className="pl-3 py-10 font-medium text-2xl mb-7 text-blue-900 text-center">
           <p>
-            <span className="blink">🔴</span>St. Josephs
+            <span className="blink">🔴</span>
+            {selectedLocation}
           </p>
         </div>
         <div className="text-[1.2rem] md:text-[1.6rem] px-4 text-blue-800 font-medium  ">
@@ -134,7 +136,7 @@ const Feeds = () => {
               key={index}
               className=" flex flex-col md:flex-row border-2  border-blue-950 rounded-lg w-5/6 h-[90%]"
             >
-              <img className="w-60 p-4 m-auto" src={item.src} alt="" />
+              <img className="w-60 p-7 m-auto" src={item.src} alt="" />
               <div className="text-[0.9rem]   lg:text-[1.1rem] justify-self-center text-white m-auto border border-black-2 rounded-lg bg-blue-900 font-bold p-3  text-center">
                 {item.value}
               </div>
